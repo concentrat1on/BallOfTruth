@@ -21,6 +21,7 @@ class NetworkManager {
     private let apiURL = "https://8ball.delegator.com/magic/JSON/somequestion"
     
     func getPrediction(completion: @escaping (Result<BallModel, NetworkManagerError>) -> Void) {
+        
         guard let url = URL(string: apiURL) else {
             completion(.failure(.somethingWentWrong))
             return

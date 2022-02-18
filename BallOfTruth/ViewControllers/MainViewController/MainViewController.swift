@@ -65,7 +65,6 @@ class MainViewController: UIViewController {
 
     
     // basic layout with constraints
-    
     private func setupLayout() {
         view.backgroundColor = .lightGray
         navigationController?.navigationBar.topItem?.title = "Main"

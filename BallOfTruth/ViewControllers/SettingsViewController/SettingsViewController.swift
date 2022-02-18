@@ -15,21 +15,14 @@ enum TextFieldData: Int {
     case errorTextField = 3
 }
 
-
-// simple struct to make TableViewModel
-struct SettingsTableViewModel {
-    var title: String
-    var fieldToChange: String
-}
-
 class SettingsViewController: UIViewController {
     
     private weak var tableView: UITableView!
     
-    var settingsTableViewModel = [SettingsTableViewModel(title: "Welcome ball text", fieldToChange: DefaultsModel.shared.welcomeString),
-                                  SettingsTableViewModel(title: "Text while shaking phone", fieldToChange: DefaultsModel.shared.shakeString),
-                                  SettingsTableViewModel(title: "Text if shaking cancelled", fieldToChange: DefaultsModel.shared.shakeCancelled),
-                                  SettingsTableViewModel(title: "Some error text", fieldToChange: DefaultsModel.shared.shakeError)]
+    var settingsTableModel = [SettingsTableModel(title: "Welcome ball text", fieldToChange: DefaultsModel.shared.welcomeString),
+                                  SettingsTableModel(title: "Text while shaking phone", fieldToChange: DefaultsModel.shared.shakeString),
+                                  SettingsTableModel(title: "Text if shaking cancelled", fieldToChange: DefaultsModel.shared.shakeCancelled),
+                                  SettingsTableModel(title: "Some error text", fieldToChange: DefaultsModel.shared.shakeError)]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,7 +56,7 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
     
     // how many cells tableview renders
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return settingsTableViewModel.count
+        return settingsTableModel.count
     }
     
     // making each tableview cell
@@ -71,8 +64,8 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SettingsCell", for: indexPath) as! SettingsCell
         cell.backgroundColor = .clear
         cell.selectionStyle = .none
-        cell.cellLabel.text = settingsTableViewModel[indexPath.row].title
-        cell.cellTextField.text = settingsTableViewModel[indexPath.row].fieldToChange
+        cell.cellLabel.text = settingsTableModel[indexPath.row].title
+        cell.cellTextField.text = settingsTableModel[indexPath.row].fieldToChange
         cell.cellTextField.tag = indexPath.row
         cell.delegate = self // SettingsCellDelegate
         return cell
