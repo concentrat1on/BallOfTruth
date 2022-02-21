@@ -32,10 +32,6 @@ class SettingsCell: UITableViewCell {
         cellTextField.delegate = self // UITextFieldDelegate
         cellTextField.addTarget(self, action: #selector(valueChanged(_ :)), for: .editingChanged)
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-    }
     
     // every time textfield changes it delegates to SettingsViewController it value
     @objc private func valueChanged(_ textField: UITextField) {
