@@ -90,7 +90,6 @@ class MainViewController: UIViewController {
         messageText.textAlignment = .center
         messageText.font = UIFont.systemFont(ofSize: 18, weight: .medium)
         messageText.textColor = .black
-        messageText.text = DefaultsModel.shared.welcomeString
         self.messageText = messageText
     }
 }

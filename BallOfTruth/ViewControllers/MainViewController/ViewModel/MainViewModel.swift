@@ -34,7 +34,7 @@ class MainViewModel: NSObject {
         }
     }
     
-    func createModel(ball: BallModel) -> MainModel {
+    private func createModel(ball: BallModel) -> MainModel {
         print(ball)
         return MainModel(message: ball.magic.answer)
     }
