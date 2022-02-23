@@ -17,8 +17,6 @@ enum NetworkManagerError: String, Error {
 
 class NetworkManager: NetworkDataProvider {
     
-    static let shared = NetworkManager()
-    
     private let apiURL = "https://8ball.delegator.com/magic/JSON/somequestion"
     
     func fetchData(completion: @escaping (Result<BallModel, NetworkManagerError>) -> Void) {

@@ -30,17 +30,16 @@ class MainViewController: UIViewController {
     
     // when user starts to shake device app sends network request to server and text on the screen changes to one of hardcoded variants
     override func motionBegan(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
-        viewModel.getMessage()
         messageText.text = DefaultsModel.shared.shakeString
-    }
-    
-    
-    // after 1.5 seconds after shake shows text from json
-    override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-            self.messageText.text = self.viewModel.model?.message
+        viewModel.getMessage { [weak self] model in
+            self?.messageText.text = model.message
         }
+
     }
+    
+//    override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
+//
+//    }
     
     // if motion was cancelled it shows on the screen by using one of hardcoded answers
     override func motionCancelled(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
