@@ -32,7 +32,7 @@ class MainViewController: UIViewController {
     override func motionBegan(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         messageText.text = DefaultsModel.shared.shakeString
         viewModel.getMessage { [weak self] model in
-            self?.messageText.text = model.message
+            self?.messageText.text = model?.message
         }
 
     }

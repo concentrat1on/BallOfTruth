@@ -17,7 +17,7 @@ class MainViewModel: NSObject {
         self.networkDataProvider = networkDataProvider
     }
     
-    func getMessage(completion: @escaping ((MainModel) -> Void)) {
+    func getMessage(completion: @escaping ((MainModel?) -> Void)) {
         networkDataProvider.fetchData { [weak self] result in
             guard let self = self else { return }
             switch result {
@@ -26,13 +26,13 @@ class MainViewModel: NSObject {
                 
                 // if request was successfull result of request saves to variable
                 self.model = self.createModel(ball.magic.answer)
-                completion(self.model!)
+                completion(self.model)
             case .failure(let error):
                 print(error.localizedDescription)
                 
                 // if request was unsuccessfull variable assigns hardcoded error text
                 self.model = self.createModel(DefaultsModel.shared.shakeError)
-                completion(self.model!)
+                completion(self.model)
             }
         }
     }
