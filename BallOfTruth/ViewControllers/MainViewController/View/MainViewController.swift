@@ -9,11 +9,13 @@ import UIKit
 
 class MainViewController: UIViewController {
     
+    // outlets
     weak private var ball: UIView!
     weak private var ballMiddle: UIView!
     weak private var messageText: UILabel!
 
-    var messageString = ""
+    // Data Provider protocol
+    var viewModel = MainViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,44 +27,24 @@ class MainViewController: UIViewController {
         messageText.text = DefaultsModel.shared.welcomeString
     }
     
+    
     // when user starts to shake device app sends network request to server and text on the screen changes to one of hardcoded variants
     override func motionBegan(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         messageText.text = DefaultsModel.shared.shakeString
-        messageString = ""
-        loadMessage()
-    }
-    
-    
-    // after 1.5 seconds after shake shows text from json
-    override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-            self.messageText.text = self.messageString
+        viewModel.getMessage { [weak self] model in
+            self?.messageText.text = model?.message
         }
+
     }
+    
+//    override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
+//
+//    }
     
     // if motion was cancelled it shows on the screen by using one of hardcoded answers
     override func motionCancelled(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         messageText.text = DefaultsModel.shared.shakeCancelled
     }
-    
-    private func loadMessage() {
-        NetworkManager.shared.getPrediction { [weak self] result in
-            guard self == self else { return }
-            switch result {
-            case .success(let message):
-                print(message)
-                
-                // if request was successfull result of request saves to variable
-                self?.messageString = message.magic.answer
-            case .failure(let error):
-                print(error.localizedDescription)
-                
-                // if request was unsuccessfull variable assigns hardcoded error text
-                self?.messageString = DefaultsModel.shared.shakeError
-            }
-        }
-    }
-
     
     // basic layout with constraints
     private func setupLayout() {
@@ -107,7 +89,6 @@ class MainViewController: UIViewController {
         messageText.textAlignment = .center
         messageText.font = UIFont.systemFont(ofSize: 18, weight: .medium)
         messageText.textColor = .black
-        messageText.text = DefaultsModel.shared.welcomeString
         self.messageText = messageText
     }
 }

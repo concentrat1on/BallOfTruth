@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SettingsTableModel {
+struct SettingsCellModel {
     var title: String
     var fieldToChange: String
 }
